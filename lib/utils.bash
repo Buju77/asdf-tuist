@@ -2,7 +2,10 @@
 
 set -euo pipefail
 
-GH_REPO="https://github.com/runtastic/tuist"
+# This sets TUIST_FORK_NAME to the value of MISE_TOOL_OPTS__TUIST_FORK_NAME if it exists, otherwise defaults to "tuist"
+TUIST_FORK_NAME="${MISE_TOOL_OPTS__TUIST_FORK_NAME:-tuist}"
+
+GH_REPO="https://github.com/$TUIST_FORK_NAME/tuist"
 TOOL_NAME="tuist"
 TOOL_TEST="tuist --help"
 
