@@ -2,10 +2,7 @@
 
 set -euo pipefail
 
-# This sets TUIST_FORK_NAME to the value of MISE_TOOL_OPTS__TUIST_FORK_NAME if it exists, otherwise defaults to "tuist"
-TUIST_FORK_NAME="${MISE_TOOL_OPTS__TUIST_FORK_NAME:-tuist}"
-
-GH_REPO="https://github.com/$TUIST_FORK_NAME/tuist"
+GH_REPO="https://github.com/tuist/tuist"
 TOOL_NAME="tuist"
 TOOL_TEST="tuist --help"
 
@@ -41,6 +38,14 @@ download_release() {
 	local version filename url
 	version="$1"
 	filename="$2"
+
+	# if tool version contains "runtastic" like '3.35.6-runtastic', then use RT fork, otherwise use standard tuist fork Github repo
+	if [[ $version == *"runtastic"* ]]; then
+		TUIST_FORK_NAME="runtastic"
+	else
+		TUIST_FORK_NAME="tuist"
+	fi
+	GH_REPO="https://github.com/$TUIST_FORK_NAME/tuist"
 
 	url="$GH_REPO/releases/download/${version}/tuist.zip"
 
